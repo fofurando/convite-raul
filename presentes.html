@@ -1,77 +1,100 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
-
-<title>Sugestões de Presentes</title>
-
+<title>Presentes Raul 10 anos</title>
 <style>
 body{
-margin:0;
-background:#0d1b2a;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-font-family:'Baloo 2', cursive;
-color:white;
-text-align:center;
+  margin:0;
+  background:#0d1b2a;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:'Arial', sans-serif;
+  overflow:hidden;
 }
 
-.frame{
-background:url('moldura.png') center/contain no-repeat;
-background-size:contain;
-padding:70px 20px;
-width:90%;
-max-width:500px;
+.container{
+  position:relative;
+  width:100%;
+  max-width:420px;
+  aspect-ratio:9/16;
+  background:#0d1b2a;
+  overflow:hidden;
+  border-radius:25px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:white;
 }
 
-h1{
-font-family:'Luckiest Guy', cursive;
-font-size:32px;
-margin-bottom:20px;
+/* Moldura */
+#molduraImg{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  pointer-events:none;
+  z-index:-1;
 }
 
-.present{
-margin:15px 0;
-padding:12px;
-background:#3ec1d3;
-border-radius:25px;
-font-size:16px;
+/* Botões cinematográficos */
+button{
+  margin:10px;
+  padding:14px 22px;
+  border-radius:50px;
+  border:none;
+  background:linear-gradient(135deg,#ff6aff,#ff00ff);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 0 20px rgba(255,0,255,0.7);
+}
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 35px rgba(255,0,255,1);
 }
 
-.voltar{
-margin-top:20px;
-padding:10px 20px;
-border-radius:20px;
-border:none;
-background:#00b4d8;
-color:white;
-cursor:pointer;
+/* Sugestões */
+.sugestoes{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  z-index:2;
+}
+
+.obs{
+  font-size:14px;
+  margin-top:10px;
+  color:#f0f0f0;
+  text-shadow:0 0 5px #fff;
 }
 </style>
 </head>
-
 <body>
 
-<div class="frame">
-<h1>Sugestões</h1>
+<div class="container">
 
-<div class="present">🎮 Jogos e brinquedos educativos</div>
-<div class="present">👕 Roupas tamanho 12 anos</div>
-<div class="present">💳 Pix de qualquer valor! <span id="pixKey">24e72c1b-f106-4d15-bb38-a5d49499a8a5</span>
-</div>
+  <img src="./moldura.png" id="molduraImg">
 
-<button onclick="copiarPix()" class="voltar">
-Copiar chave Pix
-</button>
+  <h2>Presentes para Raul</h2>
 
-<button class="voltar" onclick="window.location.href='index.html#frame'">
-Voltar
-</button>
+  <div class="sugestoes">
+    <button>Livro infantil</button>
+    <button>Brinquedo educativo</button>
+    <button>Jogo de tabuleiro</button>
+  </div>
+
+  <button onclick="window.location.href='index.html'">⬅ Voltar</button>
+  <div class="obs">churrasco comunitário</div>
 
 </div>
 
