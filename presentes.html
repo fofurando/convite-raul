@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
+
+<title>Sugestões de Presentes</title>
+
+<style>
+body{
+margin:0;
+background:#0d1b2a;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+font-family:'Baloo 2', cursive;
+color:white;
+text-align:center;
+}
+
+.frame{
+background:url('moldura.png') center/contain no-repeat;
+background-size:contain;
+padding:70px 20px;
+width:90%;
+max-width:500px;
+}
+
+h1{
+font-family:'Luckiest Guy', cursive;
+font-size:32px;
+margin-bottom:20px;
+}
+
+.present{
+margin:15px 0;
+padding:12px;
+background:#3ec1d3;
+border-radius:25px;
+font-size:16px;
+}
+
+.voltar{
+margin-top:20px;
+padding:10px 20px;
+border-radius:20px;
+border:none;
+background:#00b4d8;
+color:white;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="frame">
+<h1>Sugestões</h1>
+
+<div class="present">🎮 Jogos e brinquedos educativos</div>
+<div class="present">👕 Roupas tamanho 12 anos</div>
+<div class="present">💳 Pix de qualquer valor! <span id="pixKey">24e72c1b-f106-4d15-bb38-a5d49499a8a5</span>
+</div>
+
+<button onclick="copiarPix()" class="voltar">
+Copiar chave Pix
+</button>
+
+<button class="voltar" onclick="window.location.href='index.html'">
+Voltar
+</button>
+
+</div>
+
+</body>
+</html>
