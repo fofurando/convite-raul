@@ -1,202 +1,228 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convite Raul 10 anos</title>
-<style>
-/* Layout Story 9:16 */
-body{
-  margin:0;
-  background:#000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  font-family:'Arial', sans-serif;
-  overflow:hidden;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite Raul 10 Anos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
 
-.container{
-  position:relative;
-  width:100%;
-  max-width:420px;
-  aspect-ratio:9/16;
-  background:#0d1b2a;
-  overflow:hidden;
-  border-radius:25px;
-}
+    <style>
+        :root {
+            --azul-sulley: #00A5CF;
+            --verde-mike: #94D025;
+            --magia: radial-gradient(circle, #fff, #fbda61, #ff5acd, #2b44ff);
+        }
 
-  /* Imagem do envelope (início do convite) */
-#envelopeImg{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:60%;
-  pointer-events:none;
-  z-index:2;
-}
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            font-family: 'Baloo 2', cursive;
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
 
-  /* Vídeo do convite */
-#conviteVideo{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+        .main-container {
+            position: relative;
+            width: 100%; max-width: 450px;
+            height: 100vh;
+            background: #121212;
+        }
 
-/* Moldura */
-#molduraImg{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  pointer-events:none;
-}
+        /* TELA 1: ENVELOPE */
+        #startScreen {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: url('envelope.png') center/contain no-repeat, var(--azul-sulley);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 50; cursor: pointer;
+        }
 
-/* Frame final com dados e botões */
-#frame{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  color:white;
-  opacity:0;
-  transition:opacity 1.5s ease;
-}
+        .tap-text {
+            position: absolute;
+            bottom: 15%;
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 28px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--verde-mike);
+            animation: blink 1.2s infinite;
+        }
 
-/* Título e info */
-#frame h1{
-  font-size:32px;
-  text-shadow: 0 0 10px #00f7ff;
-  margin:0;
-}
-#frame p{
-  font-size:18px;
-  margin:10px 0;
-  text-shadow: 0 0 8px #00f7ff;
-}
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
 
-/* Botões cinematográficos */
-button{
-  margin:10px;
-  padding:14px 22px;
-  border-radius:50px;
-  border:none;
-  background:linear-gradient(135deg,#ff6aff,#ff00ff);
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.3s;
-  box-shadow:0 0 20px rgba(255,0,255,0.7);
-}
-button:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 35px rgba(255,0,255,1);
-}
+        #soundAlert {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff4757;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+            z-index: 60;
+            white-space: nowrap;
+        }
 
-.obs{
-  font-size:14px;
-  margin-top:10px;
-  color:#f0f0f0;
-  text-shadow:0 0 5px #fff;
-}
+        @keyframes pulse { 0% { transform: translate(-50%, 0) scale(1); } 50% { transform: translate(-50%, 0) scale(1.1); } 100% { transform: translate(-50%, 0) scale(1); } }
 
-/* Pequena animação de brilho dos botões */
-@keyframes glow{
-  0% { box-shadow:0 0 20px rgba(255,0,255,0.7); }
-  50% { box-shadow:0 0 35px rgba(255,0,255,1); }
-  100% { box-shadow:0 0 20px rgba(255,0,255,0.7); }
-}
-button{
-  animation: glow 2s infinite;
-}
+        video {
+            position: absolute;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: none;
+            z-index: 10;
+        }
 
-</style>
+        /* EFEITO DE EXPLOSÃO MÁGICA */
+        #magicExplosion {
+            position: absolute;
+            width: 100%; height: 100%;
+            background: var(--magia);
+            opacity: 0;
+            z-index: 25;
+            pointer-events: none;
+        }
+
+        .explode { animation: explosionAnim 0.8s ease-out forwards; }
+
+        @keyframes explosionAnim {
+            0% { opacity: 0; transform: scale(0.1); }
+            50% { opacity: 1; transform: scale(1.5); filter: blur(10px); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+
+        /* TELA MOLDURA E PRESENTES */
+        #screenConvite, #screenPresentes {
+            display: none;
+            position: absolute;
+            width: 100%; height: 100%;
+            z-index: 20;
+        }
+
+        .stomp { animation: stompAnim 0.6s ease-out; }
+
+        @keyframes stompAnim {
+            0% { transform: scale(5); opacity: 0; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* TODOS OS BOTÕES TRANSPARENTES */
+        .btn-invisible {
+            position: absolute; 
+            z-index: 100;
+            background: transparent; 
+            border: none; 
+            outline: none;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* POSIÇÕES BASEADAS NOS SEUS PRINTS */
+        .pos-confirmar { width: 23.33%; height: 13.12%; left: 10%; top: 59.53%; }
+        .pos-mapa { width: 13.87%; height: 7.80%; left: 26.48%; top: 63.28%; }
+        .pos-presentes { width: 13.87%; height: 7.80%; left: 43.34%; top: 63.33%; }
+        
+        /* Botões da tela de presentes */
+        .pos-pix { width: 48.52%; height: 7.45%; left: 25.26%; top: 67.25%; }
+        .pos-voltar { width: 10.24%; height: 5.76%; left: 73.79%; top: 78.86%; }
+
+    </style>
 </head>
 <body>
 
-<div class="container">
+    <div class="main-container">
+        
+        <div id="soundAlert">⚠️ LIGUE O SOM! 🔊</div>
 
-  <!-- Vídeo do convite -->
-  <video id="conviteVideo" autoplay muted playsinline>
-    <source src="./video.mp4" type="video/mp4">
-  </video>
+        <div id="startScreen" onclick="iniciar()">
+            <div class="tap-text">Toque para abrir</div>
+        </div>
 
-  <img src="./envelope.png" id="envelopeImg">
-  
-  <!-- Moldura animada -->
-  <img src="./moldura01.jpg" id="molduraImg">
+        <div id="magicExplosion"></div>
 
-  <!-- Frame final -->
-  <div id="frame">
-    <h1>Raul</h1>
-    <p>10 anos<br>07 de março de 2026<br>às 15 horas</p>
-    <button onclick="abrirMapa()">📍 Localização</button>
-    <button onclick="confirmar()">🎉 Confirmar Presença</button>
-    <button onclick="window.location.href='presentes.html'">🎁 Sugestão de Presentes</button>
-    <div class="obs">churrasco comunitário</div>
-  </div>
+        <video id="videoIntro" src="video.mp4" playsinline></video>
 
-</div>
+        <div id="screenConvite">
+            <video id="videoMoldura" src="video_moldura.mp4" loop muted playsinline style="display:block"></video>
+            <button class="btn-invisible pos-confirmar" onclick="confirmar()"></button>
+            <button class="btn-invisible pos-mapa" onclick="abrirMapa()"></button>
+            <button class="btn-invisible pos-presentes" onclick="mostrarPresentes()"></button>
+        </div>
 
-<script>
-// Mostra o frame quando o vídeo termina
-const video = document.getElementById('conviteVideo');
-const frame = document.getElementById('frame');
-video.onended = () => {
-  frame.classList.add('show');
-}
+        <div id="screenPresentes">
+            <video id="videoPresentes" src="video_presentes.mp4" loop muted playsinline style="display:block"></video>
+            <button class="btn-invisible pos-pix" onclick="copiarPix()"></button>
+            <button class="btn-invisible pos-voltar" onclick="voltar()"></button>
+        </div>
 
-// Funções dos botões
-function abrirMapa(){
-  window.open('https://maps.app.goo.gl/8PKVQXYy6UK7sbPAA', '_blank');
-}
-function confirmar(){
-  window.open('hhttps://wa.link/qhpf5s', '_blank');
-}
+    </div>
 
-// Partículas simples de purpurina
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-canvas.width = canvas.offsetWidth;
-canvas.height = canvas.offsetHeight;
+    <script>
+        const vIntro = document.getElementById('videoIntro');
+        const vMoldura = document.getElementById('videoMoldura');
+        const vPresentes = document.getElementById('videoPresentes');
+        const explosion = document.getElementById('magicExplosion');
+        const screenConvite = document.getElementById('screenConvite');
+        const screenPresentes = document.getElementById('screenPresentes');
 
-const particles = [];
-for(let i=0;i<150;i++){
-  particles.push({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    r: Math.random()*3+1,
-    dx: (Math.random()-0.5)*2,
-    dy: (Math.random()-0.5)*2
-  });
-}
+        function iniciar() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('soundAlert').style.display = 'none';
+            vIntro.style.display = 'block';
+            vIntro.play();
+        }
 
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle = 'rgba(255,255,255,0.8)';
-    ctx.fill();
-    p.x += p.dx;
-    p.y += p.dy;
-    if(p.x<0||p.x>canvas.width)p.dx*=-1;
-    if(p.y<0||p.y>canvas.height)p.dy*=-1;
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
+        // Transição do vídeo de intro para a moldura
+        vIntro.onended = function() {
+            vIntro.style.display = 'none';
+            explosion.classList.add('explode');
+            
+            setTimeout(() => {
+                screenConvite.style.display = 'block';
+                screenConvite.classList.add('stomp');
+                vMoldura.play();
+            }, 400);
+        };
 
+        function mostrarPresentes() {
+            screenConvite.style.display = 'none';
+            screenPresentes.style.display = 'block';
+            vPresentes.play();
+        }
+
+        function voltar() {
+            screenPresentes.style.display = 'none';
+            screenConvite.style.display = 'block';
+            vMoldura.play();
+        }
+
+        function abrirMapa() { 
+            window.open("https://maps.app.goo.gl/8PKVQXYy6UK7sbPAA"); 
+        }
+
+        function confirmar() { 
+            window.open("https://wa.link/qhpf5s"); 
+        }
+
+        function copiarPix() {
+            const chave = "24e72c1b-f106-4d15-bb38-a5d49499a8a5"; // <--- COLOQUE A CHAVE AQUI
+            navigator.clipboard.writeText(chave).then(() => {
+                alert("Chave copiada! 🎉");
+            }).catch(err => {
+                // Fallback para celulares antigos
+                const tempInput = document.createElement("input");
+                tempInput.value = chave;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                alert("Chave copiada! 🎉");
+            });
+        }
+    </script>
 </body>
 </html>
