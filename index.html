@@ -28,11 +28,12 @@
             background: #121212;
         }
 
-        /* TELA 1: ENVELOPE */
+        /* TELA 1: ENVELOPE (CORRIGIDO PARA TELA CHEIA) */
         #startScreen {
             position: absolute;
             width: 100%; height: 100%;
-            background: url('envelope.png') center/contain no-repeat, var(--azul-sulley);
+            /* 'cover' garante que a imagem preencha tudo sem sobras */
+            background: url('envelope.png') center/cover no-repeat;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             z-index: 50; cursor: pointer;
@@ -56,8 +57,8 @@
         }
 
         @keyframes pulseSuave {
-            0%, 100% { opacity: 0.8; transform: translate(-50%, 0) scale(1); }
-            50% { opacity: 1; transform: translate(-50%, 0) scale(1.05); }
+            0%, 100% { transform: translate(-50%, 0) scale(1); }
+            50% { transform: translate(-50%, 0) scale(1.05); }
         }
 
         /* TEXTO TOQUE PARA ABRIR */
@@ -72,10 +73,7 @@
             animation: blinkFilme 1.5s infinite;
         }
 
-        @keyframes blinkFilme {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { opacity: 0.7; }
-        }
+        @keyframes blinkFilme { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
 
         video {
             position: absolute;
@@ -84,27 +82,13 @@
             z-index: 10;
         }
 
-        /* ANIMAÇÕES DE FADE */
-        .fade-out {
-            animation: fadeOutAnim 0.8s forwards;
-        }
+        /* ANIMAÇÕES DE FADE (ACELERADAS PARA 0.4s) */
+        .fade-out { animation: fadeOutAnim 0.4s forwards; }
+        .fade-in { display: block !important; animation: fadeInAnim 0.4s forwards; }
 
-        .fade-in {
-            display: block !important;
-            animation: fadeInAnim 0.8s forwards;
-        }
+        @keyframes fadeOutAnim { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes fadeInAnim { from { opacity: 0; } to { opacity: 1; } }
 
-        @keyframes fadeOutAnim {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-
-        @keyframes fadeInAnim {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* TELAS DE CONTEÚDO */
         #screenConvite, #screenPresentes {
             display: none;
             position: absolute;
@@ -122,10 +106,17 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* POSIÇÕES DOS BOTÕES */
-        .pos-confirmar { width: 23.33%; height: 13.12%; left: 10%; top: 59.53%; }
-        .pos-mapa { width: 13.87%; height: 7.80%; left: 26.48%; top: 63.28%; }
-        .pos-presentes { width: 13.87%; height: 7.80%; left: 43.34%; top: 63.33%; }
+        /* --- NOVAS POSIÇÕES CORRIGIDAS --- */
+        /* Confirmar Presença: X:286 Y:1215 */
+        .pos-confirmar { width: 13.87%; height: 7.80%; left: 26.48%; top: 63.28%; }
+        
+        /* Mapa: X:468.1 Y:1216 */
+        .pos-mapa { width: 13.87%; height: 7.80%; left: 43.34%; top: 63.33%; }
+        
+        /* Sugestão Presentes: X:650.1 Y:1217 */
+        .pos-presentes { width: 13.87%; height: 7.80%; left: 60.19%; top: 63.38%; }
+
+        /* Botões da tela de presentes (conforme últimos prints) */
         .pos-pix { width: 48.52%; height: 7.45%; left: 25.26%; top: 67.25%; }
         .pos-voltar { width: 10.24%; height: 5.76%; left: 73.79%; top: 78.86%; }
 
@@ -171,15 +162,13 @@
             vIntro.play();
         }
 
-        // Transição Suave: Fade Out da Intro -> Fade In da Moldura
         vIntro.onended = function() {
             vIntro.classList.add('fade-out');
-            
             setTimeout(() => {
                 vIntro.style.display = 'none';
                 screenConvite.classList.add('fade-in');
                 vMoldura.play();
-            }, 800); // Tempo igual ao da animação fade-out
+            }, 400); // Transição rápida de 0.4s
         };
 
         function mostrarPresentes() {
