@@ -10,7 +10,6 @@
         :root {
             --azul-sulley: #00A5CF;
             --verde-mike: #94D025;
-            --magia: radial-gradient(circle, #fff, #fbda61, #ff5acd, #2b44ff);
         }
 
         body, html {
@@ -39,94 +38,94 @@
             z-index: 50; cursor: pointer;
         }
 
-        .tap-text {
-            position: absolute;
-            bottom: 15%;
-            font-family: 'Luckiest Guy', cursive;
-            font-size: 28px;
-            color: #fff;
-            text-shadow: 0 0 10px var(--verde-mike);
-            animation: blink 1.2s infinite;
-        }
-
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-
+        /* BOTÃO DE SOM SUAVE */
         #soundAlert {
             position: absolute;
-            top: 20px;
+            top: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: #ff4757;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: bold;
-            animation: pulse 1.5s infinite;
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--azul-sulley);
+            padding: 8px 25px;
+            border-radius: 15px;
+            border: 2px solid var(--azul-sulley);
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 14px;
             z-index: 60;
-            white-space: nowrap;
+            animation: pulseSuave 2s infinite;
         }
 
-        @keyframes pulse { 0% { transform: translate(-50%, 0) scale(1); } 50% { transform: translate(-50%, 0) scale(1.1); } 100% { transform: translate(-50%, 0) scale(1); } }
+        @keyframes pulseSuave {
+            0%, 100% { opacity: 0.8; transform: translate(-50%, 0) scale(1); }
+            50% { opacity: 1; transform: translate(-50%, 0) scale(1.05); }
+        }
+
+        /* TEXTO TOQUE PARA ABRIR */
+        .tap-text {
+            position: absolute;
+            bottom: 12%;
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 32px;
+            color: var(--verde-mike);
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0px #000, 0px 0px 20px rgba(148, 208, 37, 0.6);
+            animation: blinkFilme 1.5s infinite;
+        }
+
+        @keyframes blinkFilme {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { opacity: 0.7; }
+        }
 
         video {
             position: absolute;
             width: 100%; height: 100%;
             object-fit: cover;
-            display: none;
             z-index: 10;
         }
 
-        /* EFEITO DE EXPLOSÃO MÁGICA */
-        #magicExplosion {
-            position: absolute;
-            width: 100%; height: 100%;
-            background: var(--magia);
-            opacity: 0;
-            z-index: 25;
-            pointer-events: none;
+        /* ANIMAÇÕES DE FADE */
+        .fade-out {
+            animation: fadeOutAnim 0.8s forwards;
         }
 
-        .explode { animation: explosionAnim 0.8s ease-out forwards; }
-
-        @keyframes explosionAnim {
-            0% { opacity: 0; transform: scale(0.1); }
-            50% { opacity: 1; transform: scale(1.5); filter: blur(10px); }
-            100% { opacity: 0; transform: scale(2); }
+        .fade-in {
+            display: block !important;
+            animation: fadeInAnim 0.8s forwards;
         }
 
-        /* TELA MOLDURA E PRESENTES */
+        @keyframes fadeOutAnim {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes fadeInAnim {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* TELAS DE CONTEÚDO */
         #screenConvite, #screenPresentes {
             display: none;
             position: absolute;
             width: 100%; height: 100%;
+            opacity: 0;
             z-index: 20;
         }
 
-        .stomp { animation: stompAnim 0.6s ease-out; }
-
-        @keyframes stompAnim {
-            0% { transform: scale(5); opacity: 0; }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* TODOS OS BOTÕES TRANSPARENTES */
         .btn-invisible {
             position: absolute; 
             z-index: 100;
             background: transparent; 
             border: none; 
-            outline: none;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* POSIÇÕES BASEADAS NOS SEUS PRINTS */
+        /* POSIÇÕES DOS BOTÕES */
         .pos-confirmar { width: 23.33%; height: 13.12%; left: 10%; top: 59.53%; }
         .pos-mapa { width: 13.87%; height: 7.80%; left: 26.48%; top: 63.28%; }
         .pos-presentes { width: 13.87%; height: 7.80%; left: 43.34%; top: 63.33%; }
-        
-        /* Botões da tela de presentes */
         .pos-pix { width: 48.52%; height: 7.45%; left: 25.26%; top: 67.25%; }
         .pos-voltar { width: 10.24%; height: 5.76%; left: 73.79%; top: 78.86%; }
 
@@ -141,8 +140,6 @@
         <div id="startScreen" onclick="iniciar()">
             <div class="tap-text">Toque para abrir</div>
         </div>
-
-        <div id="magicExplosion"></div>
 
         <video id="videoIntro" src="video.mp4" playsinline></video>
 
@@ -165,61 +162,46 @@
         const vIntro = document.getElementById('videoIntro');
         const vMoldura = document.getElementById('videoMoldura');
         const vPresentes = document.getElementById('videoPresentes');
-        const explosion = document.getElementById('magicExplosion');
         const screenConvite = document.getElementById('screenConvite');
         const screenPresentes = document.getElementById('screenPresentes');
 
         function iniciar() {
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('soundAlert').style.display = 'none';
-            vIntro.style.display = 'block';
             vIntro.play();
         }
 
-        // Transição do vídeo de intro para a moldura
+        // Transição Suave: Fade Out da Intro -> Fade In da Moldura
         vIntro.onended = function() {
-            vIntro.style.display = 'none';
-            explosion.classList.add('explode');
+            vIntro.classList.add('fade-out');
             
             setTimeout(() => {
-                screenConvite.style.display = 'block';
-                screenConvite.classList.add('stomp');
+                vIntro.style.display = 'none';
+                screenConvite.classList.add('fade-in');
                 vMoldura.play();
-            }, 400);
+            }, 800); // Tempo igual ao da animação fade-out
         };
 
         function mostrarPresentes() {
             screenConvite.style.display = 'none';
-            screenPresentes.style.display = 'block';
+            screenPresentes.classList.add('fade-in');
             vPresentes.play();
         }
 
         function voltar() {
             screenPresentes.style.display = 'none';
+            screenPresentes.classList.remove('fade-in');
             screenConvite.style.display = 'block';
+            screenConvite.style.opacity = '1';
             vMoldura.play();
         }
 
-        function abrirMapa() { 
-            window.open("https://maps.app.goo.gl/8PKVQXYy6UK7sbPAA"); 
-        }
-
-        function confirmar() { 
-            window.open("https://wa.link/qhpf5s"); 
-        }
-
+        function abrirMapa() { window.open("https://maps.app.goo.gl/8PKVQXYy6UK7sbPAA"); }
+        function confirmar() { window.open("https://wa.link/qhpf5s"); }
+        
         function copiarPix() {
-            const chave = "24e72c1b-f106-4d15-bb38-a5d49499a8a5"; // <--- COLOQUE A CHAVE AQUI
+            const chave = "24e72c1b-f106-4d15-bb38-a5d49499a8a5"; 
             navigator.clipboard.writeText(chave).then(() => {
-                alert("Chave copiada! 🎉");
-            }).catch(err => {
-                // Fallback para celulares antigos
-                const tempInput = document.createElement("input");
-                tempInput.value = chave;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand("copy");
-                document.body.removeChild(tempInput);
                 alert("Chave copiada! 🎉");
             });
         }
